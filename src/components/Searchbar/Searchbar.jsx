@@ -1,4 +1,4 @@
-export const Searchbar = ({ onSubmit  }) => {
+export const Searchbar = ({ onSubmit }) => {
   return (
     <header className="searchbar">
       <form className="form" onSubmit={onSubmit}>
