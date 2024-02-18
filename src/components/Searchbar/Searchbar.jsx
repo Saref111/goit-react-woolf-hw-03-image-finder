@@ -1,7 +1,10 @@
 export const Searchbar = ({ onSubmit }) => {
   return (
     <header className="searchbar">
-      <form className="form" onSubmit={onSubmit}>
+      <form className="form" onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit(e.target[1].value);
+      }}>
         <button type="submit" className="button">
           <span className="button-label">Search</span>
         </button>

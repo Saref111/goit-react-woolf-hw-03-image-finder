@@ -1,3 +1,3 @@
-export const ImageGallery = () => {
-  return <ul class="gallery"></ul>;
+export const ImageGallery = props => {
+  return <ul class="gallery">{props.children}</ul>;
 };
