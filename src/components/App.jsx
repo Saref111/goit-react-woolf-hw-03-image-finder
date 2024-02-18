@@ -23,7 +23,7 @@ class App extends Component {
 
   setLoader = (isLoading) => {
     this.setState((pS) => ({ ...pS, isLoading }));
-  }
+  };
 
   onSearch = async (query) => {
     try {
@@ -69,15 +69,21 @@ class App extends Component {
     document.body.style.overflow = 'hidden';
     this.setState((pS) => ({ ...pS, modalMedia: image }));
   };
-  
+
   onModalClose = () => {
     document.body.style = '';
     this.setState((pS) => ({ ...pS, modalMedia: null }));
   };
 
   render() {
-    const { modalMedia, showLoadMoreButton, images } = this.state;
-    const listItems = images.map((image) => <ImageGalleryItem key={image.id} image={image}  onClick={this.onImageClick}/>);
+    const { modalMedia, showLoadMoreButton, images, isLoading } = this.state;
+    const listItems = images.map((image) => (
+      <ImageGalleryItem
+        key={image.id}
+        image={image}
+        onClick={this.onImageClick}
+      />
+    ));
     return (
       <div
         style={{
@@ -91,7 +97,7 @@ class App extends Component {
         <ImageGallery>{listItems}</ImageGallery>
         {showLoadMoreButton && <Button onClick={this.onLoadMore} />}
         {modalMedia && <Modal image={modalMedia} onClose={this.onModalClose} />}
-        {this.state.isLoading && <Loader />}
+        {isLoading && <Loader />}
       </div>
     );
   }

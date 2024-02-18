@@ -8,7 +8,7 @@ export const ImageGalleryItem = ({ image, onClick }) => {
         src={image.webformatURL}
         alt={image.tags}
         onClick={() => onClick(image)}
-        loading='lazy'
+        loading="lazy"
       />
     </li>
   );

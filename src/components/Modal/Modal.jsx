@@ -15,4 +15,4 @@ export const Modal = ({ image, onClose }) => {
       </div>
     </div>
   );
-}
+};
