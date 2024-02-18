@@ -28,14 +28,14 @@ class App extends Component {
 
   render() {
     const listItems = this.state.images.map((image) => (
-      <ImageGalleryItem {...image} />
+      <ImageGalleryItem image={image} />
     ));
     return (
       <div
         style={{
           height: '100vh',
           display: 'flex',
-          justifyContent: 'center',
+          flexDirection: 'column',
           alignItems: 'center',
           fontSize: 40,
           color: '#010101',

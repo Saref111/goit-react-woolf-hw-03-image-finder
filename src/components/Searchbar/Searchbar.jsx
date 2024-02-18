@@ -1,10 +1,16 @@
+import React from "react";
+import css from "./Searchbar.module.scss";
+
 export const Searchbar = ({ onSubmit }) => {
   return (
-    <header className="searchbar">
-      <form className="form" onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit(e.target[1].value);
-      }}>
+    <header className={css.searchbar}>
+      <form
+        className="form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit(e.target[1].value);
+        }}
+      >
         <button type="submit" className="button">
           <span className="button-label">Search</span>
         </button>
@@ -12,8 +18,8 @@ export const Searchbar = ({ onSubmit }) => {
         <input
           className="input"
           type="text"
-          autocomplete="off"
-          autofocus
+          autoComplete="off"
+          autoFocus
           placeholder="Search images and photos"
         />
       </form>
