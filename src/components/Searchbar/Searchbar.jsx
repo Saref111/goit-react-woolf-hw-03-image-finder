@@ -1,5 +1,5 @@
-import React from "react";
-import css from "./Searchbar.module.scss";
+import React from 'react';
+import css from './Searchbar.module.scss';
 
 export const Searchbar = ({ onSubmit }) => {
   return (

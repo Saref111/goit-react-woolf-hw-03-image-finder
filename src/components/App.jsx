@@ -16,7 +16,7 @@ class App extends Component {
     images: [],
     modalMedia: null,
     currentPage: 1,
-    searchQuery: '',
+    query: '',
     showLoadMoreButton: false,
     isLoading: false,
   };
@@ -26,43 +26,14 @@ class App extends Component {
   };
 
   onSearch = async (query) => {
-    try {
-      this.setLoader(true);
-      const resp = await fetchImages({ searchQuery: query });
-
-      this.setState((pS) => ({
-        ...pS,
-        isLoading: false,
-        images: resp.data.hits,
-        currentPage: 1,
-        searchQuery: query,
-        showLoadMoreButton: getShowMoreButtonVisibility(resp.data.hits),
-      }));
-    } catch (error) {
-      this.setLoader(false);
-      console.error('Error fetching images', error);
-    }
+    this.setState((pS) => ({ ...pS, query, currentPage: 1 }));
   };
 
   onLoadMore = async () => {
-    try {
-      this.setLoader(true);
-      const resp = await fetchImages({
-        searchQuery: this.state.searchQuery,
-        currentPage: this.state.currentPage + 1,
-      });
-
       this.setState((pS) => ({
         ...pS,
-        isLoading: false,
-        images: [...pS.images, ...resp.data.hits],
         currentPage: pS.currentPage + 1,
-        showLoadMoreButton: getShowMoreButtonVisibility(resp.data.hits),
       }));
-    } catch (error) {
-      this.setLoader(false);
-      console.error('Error fetching images', error);
-    }
   };
 
   onImageClick = (image) => {
@@ -74,6 +45,30 @@ class App extends Component {
     document.body.style = '';
     this.setState((pS) => ({ ...pS, modalMedia: null }));
   };
+
+  async componentDidUpdate(_prevProps, prevState) {
+    const isPageChanged = this.state.currentPage !== prevState.currentPage;
+    const isQueryChanged = this.state.query !== prevState.query;
+
+    if (isPageChanged || isQueryChanged) {
+      try {
+        this.setLoader(true);
+        const resp = await fetchImages({
+          searchQuery: this.state.query,
+          currentPage: this.state.currentPage,
+        });
+        this.setState((pS) => ({
+          ...pS,
+          isLoading: false,
+          images: isQueryChanged ? resp.data.hits : [...pS.images, ...resp.data.hits],
+          showLoadMoreButton: getShowMoreButtonVisibility(resp.data.hits),
+        }));
+      } catch (error) {
+        this.setLoader(false);
+        console.error('Error fetching images', error);
+      }
+    }
+  }
 
   render() {
     const { modalMedia, showLoadMoreButton, images, isLoading } = this.state;
